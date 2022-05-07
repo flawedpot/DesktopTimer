@@ -10,7 +10,7 @@ public class Main extends Application {
 	
 	private final int WINDOW_WIDTH  = 360;
 	private final int WINDOW_HEIGHT = 270;
-	private static DesktopTimerController controller;	/* コントローラ */
+	private static DesktopTimerController controller;   /* コントローラ */
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -21,14 +21,14 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			Main.controller = loader.getController();	/* 他クラスでコントローラクラスのメンバを使用するために変数に記憶しておく */
+			Main.controller = loader.getController();   /* 他クラスでコントローラクラスのメンバを使用するために変数に記憶しておく */
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void main(String[] args) {
-		TimerCount.timerCountInit();		/* TimerCountクラスを初期化 */
+		TimerCount.timerCountInit();            /* TimerCountクラスを初期化 */
 		launch(args);
 	}
 	

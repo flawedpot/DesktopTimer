@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 public class TimerCount implements Runnable {
 
 	/* フィールド */
-	private static LocalTime timerCnt;		/* タイマのカウンタ値 */
-	private static Timer timer;				/* 周期処理のためのTimerインスタンス */
-	private static boolean timerRunFlg;		/* タイマ動作中フラグ */
+	private static LocalTime timerCnt;          /* タイマのカウンタ値                   */
+	private static Timer timer;                 /* 周期処理のためのTimerインスタンス    */
+	private static boolean timerRunFlg;         /* タイマ動作中フラグ                   */
 	
 	/* メソッド */
 	/****************************************************/
@@ -21,8 +21,8 @@ public class TimerCount implements Runnable {
 		/* タイマがすでに動作中？ */
 		if( true == TimerCount.timerRunFlg )
 		{
-			TimerCount.timer.cancel();			/* タイマ停止　*/
-			TimerCount.timerRunFlg = false;		/* タイマ動作中フラグ = 停止中 に設定 */
+			TimerCount.timer.cancel();          /* タイマ停止　                         */
+			TimerCount.timerRunFlg = false;     /* タイマ動作中フラグ = 停止中 に設定   */
 		}
 		/* タイマカウンタが00:00:00？ */
 		else if( true == TimerCount.timerCnt.equals(LocalTime.of(0, 0, 0)) )
@@ -32,7 +32,7 @@ public class TimerCount implements Runnable {
 		/* 上記以外 */
 		else
 		{
-			new Thread(new TimerCount()).start();		/* スレッドによってカウントダウンを並列処理で実行 */
+			new Thread(new TimerCount()).start();       /* スレッドによってカウントダウンを並列処理で実行 */
 		}
 	}
 	
@@ -42,7 +42,7 @@ public class TimerCount implements Runnable {
 	@Override
 	public void run()
 	{
-		TimerCount.timer = new Timer();		/* Timerインスタンス生成 */
+		TimerCount.timer = new Timer();	        /* Timerインスタンス生成 */
 		
 		/* 周期処理する処理 */
 		TimerTask task = new TimerTask()
@@ -55,23 +55,24 @@ public class TimerCount implements Runnable {
 				/* カウント開始時の処理 */
 				if( false == TimerCount.timerRunFlg )
 				{
-					TimerCount.timerRunFlg = true;						/* タイマ動作中フラグ = 動作中 に設定 */
+					TimerCount.timerRunFlg = true;                              /* タイマ動作中フラグ = 動作中 に設定 */
 				}
 				/* カウント動作中の処理 */
 				else
 				{
-					TimerCount.timerCnt = TimerCount.timerCnt.minusSeconds(1);		/* タイマカウントダウン */
-					
-					/* カウントが00:00:00になったらカウントダウン終了しタイマ停止 */
-					if( true == TimerCount.timerCnt.equals(LocalTime.of(0, 0, 0)) )
-					{
-						TimerCount.timer.cancel();				/* タイマ停止　*/
-						TimerCount.timerRunFlg = false;			/* タイマ動作中フラグ = 停止中 に設定 */
-					}
+					TimerCount.timerCnt = TimerCount.timerCnt.minusSeconds(1);  /* タイマカウントダウン */
 				}
 
-				this.controller = Main.getController();							/* コントローラを取得 */
-				this.controller.setCounterLabel(TimerCount.getTimerCount());	/* カウンタ表示を更新 */
+				this.controller = Main.getController();                         /* コントローラを取得   */
+				this.controller.setCounterLabel(TimerCount.getTimerCount());    /* カウンタ表示を更新   */
+				
+				/* カウントダウンの結果、カウントが00:00:00になった時の処理 */
+				if( true == TimerCount.timerCnt.equals(LocalTime.of(0, 0, 0)) )
+				{
+					this.controller.isTimeOver();       /* タイマオーバー時のポップアップを表示 */
+					TimerCount.timer.cancel();          /* タイマ停止　                         */
+					TimerCount.timerRunFlg = false;     /* タイマ動作中フラグ = 停止中 に設定   */
+				}
 			}
 		};
 		
@@ -84,8 +85,8 @@ public class TimerCount implements Runnable {
 	/****************************************************/
 	public static void timerCountInit()
 	{
-		TimerCount.timerCnt = LocalTime.of(0, 0, 0);		/* タイマカウントに00:00:00を設定     */
-		TimerCount.timerRunFlg = false;						/* タイマ動作中フラグ = 停止中 に設定 */
+		TimerCount.timerCnt = LocalTime.of(0, 0, 0);    /* タイマカウントに00:00:00を設定       */
+		TimerCount.timerRunFlg = false;                 /* タイマ動作中フラグ = 停止中 に設定   */
 	}
 	
 	/****************************************************/
@@ -94,9 +95,9 @@ public class TimerCount implements Runnable {
 	/* コントロール用 */
 	public static void setTimerCount(int hms, int updown)
 	{
-		/* 引数について										  */
-		/* hms：		0 = 時間[h], 1 = 分[min], 2 = 秒[sec] */
-		/* updown：	0 = カウントアップ, 1 = カウントダウン    */
+		/* 引数について                                       */
+		/* hms：0 = 時間[h], 1 = 分[min], 2 = 秒[sec]         */
+		/* updown：0 = カウントアップ, 1 = カウントダウン     */
 		
 		/* タイマ停止中？ */
 		if( false == TimerCount.timerRunFlg )

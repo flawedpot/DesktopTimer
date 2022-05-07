@@ -4,9 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class DesktopTimerController {
 
@@ -103,6 +107,24 @@ public class DesktopTimerController {
     	Platform.runLater(()->
     	{
         	this.counterLabel.setText(str);
+    	});
+    }
+
+
+	/****************************************************/
+    /* タイマオーバー時のポップアップを表示するメソッド */
+	/****************************************************/
+    public void isTimeOver()
+    {
+    	/* ラベルの更新処理をイベント・キューに転送     */
+    	Platform.runLater(()->
+    	{
+	    	/* ポップアップを表示 */
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("DesktopTimer");
+			alert.setHeaderText(null);
+			alert.setContentText("Time Over!!");
+			alert.showAndWait();        /* ポップアップを表示し、閉じられるまで待機     */
     	});
     }
 }
