@@ -9,8 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class DesktopTimerController {
 
@@ -46,43 +44,43 @@ public class DesktopTimerController {
 
     @FXML
     void onClickHourUpButton(ActionEvent event) {
-    	TimerCount.setTimerCount(0, 0);
-    	this.counterLabel.setText(TimerCount.getTimerCount());
+        TimerCount.setTimerCount(0, 0);
+        this.counterLabel.setText(TimerCount.getTimerCount());
     }
 
     @FXML
     void onClickMinUpButton(ActionEvent event) {
-    	TimerCount.setTimerCount(1, 0);
-    	this.counterLabel.setText(TimerCount.getTimerCount());
+        TimerCount.setTimerCount(1, 0);
+        this.counterLabel.setText(TimerCount.getTimerCount());
     }
 
     @FXML
     void onClickSecUpButton(ActionEvent event) {
-    	TimerCount.setTimerCount(2, 0);
-    	this.counterLabel.setText(TimerCount.getTimerCount());
+        TimerCount.setTimerCount(2, 0);
+        this.counterLabel.setText(TimerCount.getTimerCount());
     }
 
     @FXML
     void onClickHourDownButton(ActionEvent event) {
-    	TimerCount.setTimerCount(0, 1);
-    	this.counterLabel.setText(TimerCount.getTimerCount());
+        TimerCount.setTimerCount(0, 1);
+        this.counterLabel.setText(TimerCount.getTimerCount());
     }
 
     @FXML
     void onClickMinDownButton(ActionEvent event) {
-    	TimerCount.setTimerCount(1, 1);
-    	this.counterLabel.setText(TimerCount.getTimerCount());
+        TimerCount.setTimerCount(1, 1);
+        this.counterLabel.setText(TimerCount.getTimerCount());
     }
 
     @FXML
     void onClickSecDownButton(ActionEvent event) {
-    	TimerCount.setTimerCount(2, 1);
-    	this.counterLabel.setText(TimerCount.getTimerCount());
+        TimerCount.setTimerCount(2, 1);
+        this.counterLabel.setText(TimerCount.getTimerCount());
     }
 
     @FXML
     void onClickStartStopButton(ActionEvent event) {
-    	TimerCount.timerCountDown();
+        TimerCount.timerCountDown();
     }
 
     @FXML
@@ -97,34 +95,34 @@ public class DesktopTimerController {
         assert minDownButton != null : "fx:id=\"minDownButton\" was not injected: check your FXML file 'DesktopTimer.fxml'.";
     }
 
-	/****************************************************/
+    /****************************************************/
     /* タイマカウンタラベルを設定するメソッド           */
-	/****************************************************/
+    /****************************************************/
     public void setCounterLabel(String str)
     {
-    	/* ラベルの更新処理をイベント・キューに転送                                                           */
-    	/* 補足：JavaFXスレッド以外の別スレッドから直接GUIを更新しようとするとIllegalStateExceptionが発生する */
-    	Platform.runLater(()->
-    	{
-        	this.counterLabel.setText(str);
-    	});
+        /* ラベルの更新処理をイベント・キューに転送                                                           */
+        /* 補足：JavaFXスレッド以外の別スレッドから直接GUIを更新しようとするとIllegalStateExceptionが発生する */
+        Platform.runLater(()->
+        {
+            this.counterLabel.setText(str);
+        });
     }
 
 
-	/****************************************************/
+    /****************************************************/
     /* タイマオーバー時のポップアップを表示するメソッド */
-	/****************************************************/
+    /****************************************************/
     public void isTimeOver()
     {
-    	/* ラベルの更新処理をイベント・キューに転送     */
-    	Platform.runLater(()->
-    	{
-	    	/* ポップアップを表示 */
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("DesktopTimer");
-			alert.setHeaderText(null);
-			alert.setContentText("Time Over!!");
-			alert.showAndWait();        /* ポップアップを表示し、閉じられるまで待機     */
-    	});
+        /* ラベルの更新処理をイベント・キューに転送     */
+        Platform.runLater(()->
+        {
+            /* ポップアップを表示 */
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("DesktopTimer");
+            alert.setHeaderText(null);
+            alert.setContentText("Time Over!!");
+            alert.showAndWait();        /* ポップアップを表示し、閉じられるまで待機     */
+        });
     }
 }
